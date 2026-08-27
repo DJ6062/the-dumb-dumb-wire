@@ -1,24 +1,31 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { WireSection } from "@/components/WireSection";
+import { StoryFeed } from "@/components/StoryFeed";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Hey! Dumb Dumb — Three Takes on Every Story" },
+      {
+        name: "description",
+        content:
+          "A tabloid-dense news aggregator: raw wire links up top, then every story split into Republican, neutral, and Democratic coverage.",
+      },
+      { property: "og:title", content: "Hey! Dumb Dumb — Three Takes on Every Story" },
+      {
+        property: "og:description",
+        content: "Raw wire links up top. Republican, neutral, and Democratic takes below.",
+      },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <WireSection />
+      <StoryFeed />
+    </>
   );
 }
