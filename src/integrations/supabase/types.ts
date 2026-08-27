@@ -14,7 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      perspectives: {
+        Row: {
+          created_at: string
+          headline: string
+          id: string
+          lean: Database["public"]["Enums"]["perspective_lean"]
+          source_name: string
+          source_url: string
+          story_id: string
+          summary_text: string
+          youtube_video_id: string
+        }
+        Insert: {
+          created_at?: string
+          headline?: string
+          id?: string
+          lean: Database["public"]["Enums"]["perspective_lean"]
+          source_name?: string
+          source_url?: string
+          story_id: string
+          summary_text?: string
+          youtube_video_id?: string
+        }
+        Update: {
+          created_at?: string
+          headline?: string
+          id?: string
+          lean?: Database["public"]["Enums"]["perspective_lean"]
+          source_name?: string
+          source_url?: string
+          story_id?: string
+          summary_text?: string
+          youtube_video_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "perspectives_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stories: {
+        Row: {
+          archived: boolean
+          created_at: string
+          date_published: string
+          headline: string
+          id: string
+          topic: Database["public"]["Enums"]["story_topic"]
+        }
+        Insert: {
+          archived?: boolean
+          created_at?: string
+          date_published?: string
+          headline: string
+          id?: string
+          topic: Database["public"]["Enums"]["story_topic"]
+        }
+        Update: {
+          archived?: boolean
+          created_at?: string
+          date_published?: string
+          headline?: string
+          id?: string
+          topic?: Database["public"]["Enums"]["story_topic"]
+        }
+        Relationships: []
+      }
+      wire_links: {
+        Row: {
+          date_added: string
+          external_url: string
+          headline_text: string
+          id: string
+        }
+        Insert: {
+          date_added?: string
+          external_url: string
+          headline_text: string
+          id?: string
+        }
+        Update: {
+          date_added?: string
+          external_url?: string
+          headline_text?: string
+          id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +114,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      perspective_lean: "Republican" | "Neutral" | "Democratic"
+      story_topic: "Politics" | "Culture" | "Op-Ed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +242,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      perspective_lean: ["Republican", "Neutral", "Democratic"],
+      story_topic: ["Politics", "Culture", "Op-Ed"],
+    },
   },
 } as const
