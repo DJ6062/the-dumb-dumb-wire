@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CultureRouteImport } from './routes/culture'
 import { Route as OpEdRouteImport } from './routes/op-ed'
 import { Route as PoliticsRouteImport } from './routes/politics'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CultureRoute = CultureRouteImport.update({
@@ -44,6 +50,7 @@ const PoliticsRoute = PoliticsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
@@ -59,21 +67,24 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/culture' | '/op-ed' | '/politics'
+  fullPaths: '/' | '/about' | '/admin' | '/culture' | '/op-ed' | '/politics'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/culture' | '/op-ed' | '/politics'
-  id: '__root__' | '/' | '/about' | '/culture' | '/op-ed' | '/politics'
+  to: '/' | '/about' | '/admin' | '/culture' | '/op-ed' | '/politics'
+  id:
+    '__root__' | '/' | '/about' | '/admin' | '/culture' | '/op-ed' | '/politics'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
   CultureRoute: typeof CultureRoute
   OpEdRoute: typeof OpEdRoute
   PoliticsRoute: typeof PoliticsRoute
@@ -93,6 +104,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/culture': {
@@ -122,6 +140,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
   CultureRoute: CultureRoute,
   OpEdRoute: OpEdRoute,
   PoliticsRoute: PoliticsRoute,
