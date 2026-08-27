@@ -70,7 +70,7 @@ export function parseYouTubeId(input: string): string {
   const match = value.match(
     /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/,
   );
-  return match ? match[1] : value;
+  return match?.[1] ?? value;
 }
 
 export function formatDate(value: string): string {
