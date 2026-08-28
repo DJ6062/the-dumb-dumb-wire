@@ -79,13 +79,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Hey! Dumb Dumb — Three Takes, One Story" },
+      { title: "Hey!! Dum Dum — Three Takes, One Story" },
       {
         name: "description",
         content:
           "A political news aggregator that puts the Republican, neutral, and Democratic take on every story side by side.",
       },
-      { property: "og:title", content: "Hey! Dumb Dumb" },
+      { property: "og:title", content: "Hey!! Dum Dum" },
       {
         property: "og:description",
         content: "Three takes. One story. Read them all.",

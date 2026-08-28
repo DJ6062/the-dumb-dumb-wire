@@ -3,13 +3,13 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Hey! Dumb Dumb" },
+      { title: "About — Hey!! Dum Dum" },
       {
         name: "description",
         content:
           "Why this site exists: we aggregate and link out to existing outlets instead of assigning bias ourselves.",
       },
-      { property: "og:title", content: "About — Hey! Dumb Dumb" },
+      { property: "og:title", content: "About — Hey!! Dum Dum" },
       {
         property: "og:description",
         content: "I'm dumb dumb! Who are you? Are you – dumb dumb – too?",

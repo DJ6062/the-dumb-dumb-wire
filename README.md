@@ -1,6 +1,6 @@
 # The Daily Dumb
 
-Build a Drudge Report–style political news aggregator called "Hey! Dumb Dumb".
+Build a Drudge Report–style political news aggregator called "Hey!! Dum Dum".
 
 Concept & Branding
 

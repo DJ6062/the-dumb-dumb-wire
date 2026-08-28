@@ -26,10 +26,10 @@ import {
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [
-      { title: "Admin — Hey! Dumb Dumb" },
+      { title: "Admin — Hey!! Dum Dum" },
       { name: "description", content: "Password-protected content entry for editors." },
       { name: "robots", content: "noindex" },
-      { property: "og:title", content: "Admin — Hey! Dumb Dumb" },
+      { property: "og:title", content: "Admin — Hey!! Dum Dum" },
       { property: "og:description", content: "Editor tools." },
     ],
   }),
