@@ -2,3 +2,6 @@ To https://github.com/DJ6062/the-dumb-dumb-wire.git
    8f24616..f2a4c52  main -> main
 To https://github.com/DJ6062/the-dumb-dumb-wire.git
    9ab51cf..379846b  main -> main
+To https://github.com/DJ6062/the-dumb-dumb-wire.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at feda227f53717bd42e008c749902c684f42ae952 but expected 379846b74a47f87e469cb5d9a0927475db2e2928)
+error: failed to push some refs to 'https://github.com/DJ6062/the-dumb-dumb-wire.git'
