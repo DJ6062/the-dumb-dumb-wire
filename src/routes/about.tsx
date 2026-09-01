@@ -74,7 +74,7 @@ function About() {
         <h2 className="headline pt-4 text-2xl uppercase">Coming later</h2>
         <ul className="list-disc space-y-1 pl-5 text-muted-foreground">
           <li>
-            <strong className="text-foreground">Dumb Dumb Meter</strong> — a small
+            <strong className="text-foreground">Dum Dum Meter</strong> — a small
             indicator per story showing how far apart the three takes actually are.
           </li>
           <li>

@@ -75,7 +75,7 @@ Simple, clean typography hierarchy: bold headline serif font for headlines, read
 
 Nice-to-haves (v2, mention as future scope)
 
-"Dumb Dumb Meter" — a small visual indicator per story showing how far apart the three takes are
+"Dum Dum Meter" — a small visual indicator per story showing how far apart the three takes are
 
 RSS/feed import to speed up story creation
 
