@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-27T16:41:03.165916+00:00",
-  "site": "https://the-dumb-dumb-wire.lovable.app",
+  "generated_at": "2026-09-03T11:56:42.277790+00:00",
+  "site": "https://the-dumb-dumb-wire.vercel.app",
   "items": [
     {
       "id": "senate-session-weekend",
       "topic": "politics",
       "title": "SENATE STAYS IN SESSION THROUGH THE WEEKEND",
-      "url": "https://the-dumb-dumb-wire.lovable.app/story/senate-session-weekend",
+      "url": "https://the-dumb-dumb-wire.vercel.app/story/senate-session-weekend",
       "summary": "Raw links, no commentary. Three takes on every story.",
       "published_at": "2026-08-27T11:30:00Z",
       "takes": {
@@ -28,7 +28,7 @@
       "id": "streaming-wars-price-hike",
       "topic": "culture",
       "title": "STREAMING PRICES CLIMB AGAIN \u2014 NOBODY'S HAPPY",
-      "url": "https://the-dumb-dumb-wire.lovable.app/story/streaming-price-hike",
+      "url": "https://the-dumb-dumb-wire.vercel.app/story/streaming-price-hike",
       "summary": "Every app raised rates this month. Here are the three angles.",
       "published_at": "2026-08-27T10:00:00Z",
       "takes": {
