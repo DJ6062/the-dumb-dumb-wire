@@ -1,5 +1,4 @@
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
 
 export const config = {
   runtime: "edge",
@@ -12,8 +11,7 @@ export default function handler(req: Request) {
     return new Response("not found", { status: 404 });
   }
   try {
-    const base = join(process.cwd(), "..", "..");
-    const raw = readFileSync(join(base, "public", "feed.json"), "utf-8");
+    const raw = readFileSync("public/feed.json", "utf-8");
     return new Response(raw, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
