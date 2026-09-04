@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "routes": [
+    { "src": "/(.*)", "dest": "/server/index.mjs" }
+  ],
+  "functions": {
+    "server/index.mjs": { "memory": 1024, "maxDuration": 10 }
+  }
+}
