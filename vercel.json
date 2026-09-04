@@ -2,6 +2,7 @@
   "buildCommand": "node scripts/gen-feed.mjs && npm run build",
   "installCommand": "npm install",
   "framework": "vite",
+  "outputDirectory": ".output/public",
   "headers": [
     {
       "source": "/(.*)",
