@@ -8,17 +8,23 @@
       "summary": "",
       "published_at": "2026-08-26T12:59:04.720876+00:00",
       "takes": {
-        "right": {
-          "source": "Placeholder Right Daily",
-          "url": "https://example.com/right/budget"
+        "left": {
+          "source": "Placeholder Left Daily",
+          "url": "https://example.com/left/budget",
+          "headline": "CUTS WOULD HIT FAMILIES FIRST",
+          "summary": "Placeholder summary. Progressive outlets emphasize which programs face the deepest reductions and who depends on them. They frame the impasse as a choice about priorities, not arithmetic."
         },
         "neutral": {
           "source": "Placeholder Wire Service",
-          "url": "https://example.com/wire/budget"
+          "url": "https://example.com/wire/budget",
+          "headline": "NEGOTIATORS RUN OUT OF CALENDAR",
+          "summary": "Placeholder summary. Wire services report both caucuses remain roughly $80 billion apart with three legislative days left. A short-term continuing resolution is the most likely outcome."
         },
-        "left": {
-          "source": "Placeholder Left Daily",
-          "url": "https://example.com/left/budget"
+        "right": {
+          "source": "Placeholder Right Daily",
+          "url": "https://example.com/right/budget",
+          "headline": "SPENDING SPREE MUST END",
+          "summary": "Placeholder summary. Conservative outlets frame the standoff as a long-overdue fight against runaway federal spending. They argue the deficit, not the shutdown threat, is the real emergency."
         }
       }
     },
@@ -30,17 +36,23 @@
       "summary": "",
       "published_at": "2026-08-24T12:59:04.720876+00:00",
       "takes": {
-        "right": {
-          "source": "Placeholder Right Wire",
-          "url": "https://example.com/right/border"
+        "left": {
+          "source": "Placeholder Left Wire",
+          "url": "https://example.com/left/border",
+          "headline": "ASYLUM PROTECTIONS AT STAKE",
+          "summary": "Placeholder summary. Left-leaning outlets highlight the asylum restrictions in the draft text and the objections from advocacy groups. They frame the failure as avoiding a harmful compromise."
         },
         "neutral": {
           "source": "Placeholder Wire Service",
-          "url": "https://example.com/wire/border"
+          "url": "https://example.com/wire/border",
+          "headline": "VOTE COUNT NEVER MATERIALIZED",
+          "summary": "Placeholder summary. Neutral reporting notes leadership pulled the bill after failing to secure 218 votes. Both parties blame the other for the collapse."
         },
-        "left": {
-          "source": "Placeholder Left Wire",
-          "url": "https://example.com/left/border"
+        "right": {
+          "source": "Placeholder Right Wire",
+          "url": "https://example.com/right/border",
+          "headline": "ENFORCEMENT GUTTED, AGAIN",
+          "summary": "Placeholder summary. Right-leaning coverage focuses on enforcement provisions stripped in committee. The bill is described as a messaging exercise rather than a border fix."
         }
       }
     },
@@ -52,17 +64,23 @@
       "summary": "",
       "published_at": "2026-08-22T12:59:04.720876+00:00",
       "takes": {
-        "right": {
-          "source": "Placeholder Right Culture",
-          "url": "https://example.com/right/doc"
+        "left": {
+          "source": "Placeholder Left Culture",
+          "url": "https://example.com/left/doc",
+          "headline": "SUBJECTS SAY THEY WERE MISLED",
+          "summary": "Placeholder summary. Left-leaning coverage centers on participants who say their interviews were edited misleadingly. Editorial standards, not censorship, drive the framing."
         },
         "neutral": {
           "source": "Placeholder Trade Weekly",
-          "url": "https://example.com/wire/doc"
+          "url": "https://example.com/wire/doc",
+          "headline": "PLATFORM CITES LICENSING",
+          "summary": "Placeholder summary. Trade press reports the title was removed at the end of a licensing window, days after a public complaint. The timing remains unexplained."
         },
-        "left": {
-          "source": "Placeholder Left Culture",
-          "url": "https://example.com/left/doc"
+        "right": {
+          "source": "Placeholder Right Culture",
+          "url": "https://example.com/right/doc",
+          "headline": "ANOTHER QUIET CANCELLATION",
+          "summary": "Placeholder summary. Conservative commentary treats the removal as evidence of a narrowing window for dissenting films. The platform's explanation is described as vague."
         }
       }
     },
@@ -74,17 +92,23 @@
       "summary": "",
       "published_at": "2026-08-20T12:59:04.720876+00:00",
       "takes": {
-        "right": {
-          "source": "Placeholder Right Opinion",
-          "url": "https://example.com/right/oped"
+        "left": {
+          "source": "Placeholder Left Opinion",
+          "url": "https://example.com/left/oped",
+          "headline": "OUTRAGE PAYS BETTER THAN CONTEXT",
+          "summary": "Placeholder summary. A progressive essayist blames ad-driven incentives that reward inflammatory headlines. The fix proposed is funding models that pay for depth."
         },
         "neutral": {
           "source": "Placeholder Media Review",
-          "url": "https://example.com/wire/oped"
+          "url": "https://example.com/wire/oped",
+          "headline": "ATTENTION IS THE SCARCE RESOURCE",
+          "summary": "Placeholder summary. A media researcher summarizes studies showing most shares happen without a click. The problem is described as structural rather than partisan."
         },
-        "left": {
-          "source": "Placeholder Left Opinion",
-          "url": "https://example.com/left/oped"
+        "right": {
+          "source": "Placeholder Right Opinion",
+          "url": "https://example.com/right/oped",
+          "headline": "THE PRESS EARNED THE DISTRUST",
+          "summary": "Placeholder summary. A conservative columnist argues that headline-only reading is a rational response to years of corrected stories. Trust, the piece says, is a lagging indicator."
         }
       }
     }
