@@ -1,0 +1,16 @@
+{
+  "buildCommand": "node scripts/gen-feed.mjs && npm run build",
+  "installCommand": "npm install",
+  "framework": "vite",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=60, must-revalidate"
+        }
+      ]
+    }
+  ]
+}
