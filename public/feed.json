@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "id": "11111111-1111-1111-1111-111111111111",
+      "topic": "politics",
+      "title": "SENATE BUDGET SHOWDOWN GOES TO THE WIRE",
+      "url": "https://hey-dum-dumb.vercel.app/story/11111111-1111-1111-1111-111111111111",
+      "summary": "",
+      "published_at": "2026-08-26T12:59:04.720876+00:00",
+      "takes": {
+        "right": {
+          "source": "Placeholder Right Daily",
+          "url": "https://example.com/right/budget"
+        },
+        "neutral": {
+          "source": "Placeholder Wire Service",
+          "url": "https://example.com/wire/budget"
+        },
+        "left": {
+          "source": "Placeholder Left Daily",
+          "url": "https://example.com/left/budget"
+        }
+      }
+    },
+    {
+      "id": "22222222-2222-2222-2222-222222222222",
+      "topic": "politics",
+      "title": "BORDER BILL COLLAPSES AGAIN ON THE HOUSE FLOOR",
+      "url": "https://hey-dum-dumb.vercel.app/story/22222222-2222-2222-2222-222222222222",
+      "summary": "",
+      "published_at": "2026-08-24T12:59:04.720876+00:00",
+      "takes": {
+        "right": {
+          "source": "Placeholder Right Wire",
+          "url": "https://example.com/right/border"
+        },
+        "neutral": {
+          "source": "Placeholder Wire Service",
+          "url": "https://example.com/wire/border"
+        },
+        "left": {
+          "source": "Placeholder Left Wire",
+          "url": "https://example.com/left/border"
+        }
+      }
+    },
+    {
+      "id": "33333333-3333-3333-3333-333333333333",
+      "topic": "culture",
+      "title": "STREAMING GIANT PULLS DOCUMENTARY AFTER BACKLASH",
+      "url": "https://hey-dum-dumb.vercel.app/story/33333333-3333-3333-3333-333333333333",
+      "summary": "",
+      "published_at": "2026-08-22T12:59:04.720876+00:00",
+      "takes": {
+        "right": {
+          "source": "Placeholder Right Culture",
+          "url": "https://example.com/right/doc"
+        },
+        "neutral": {
+          "source": "Placeholder Trade Weekly",
+          "url": "https://example.com/wire/doc"
+        },
+        "left": {
+          "source": "Placeholder Left Culture",
+          "url": "https://example.com/left/doc"
+        }
+      }
+    },
+    {
+      "id": "44444444-4444-4444-4444-444444444444",
+      "topic": "op-ed",
+      "title": "IS ANYONE STILL READING PAST THE HEADLINE?",
+      "url": "https://hey-dum-dumb.vercel.app/story/44444444-4444-4444-4444-444444444444",
+      "summary": "",
+      "published_at": "2026-08-20T12:59:04.720876+00:00",
+      "takes": {
+        "right": {
+          "source": "Placeholder Right Opinion",
+          "url": "https://example.com/right/oped"
+        },
+        "neutral": {
+          "source": "Placeholder Media Review",
+          "url": "https://example.com/wire/oped"
+        },
+        "left": {
+          "source": "Placeholder Left Opinion",
+          "url": "https://example.com/left/oped"
+        }
+      }
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { readFileSync } from "fs";
 import { join } from "path";
 
-export const Route = createFileRoute("/feed.json")({
+export const Route = createFileRoute("/feed/json/")({
   async handler() {
     const feedPath = join(process.cwd(), "public", "feed.json");
     try {
