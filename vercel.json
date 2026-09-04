@@ -3,6 +3,9 @@
   "installCommand": "npm install",
   "framework": "vite",
   "outputDirectory": ".output/public",
+  "rewrites": [
+    { "source": "/feed.json", "destination": "/api/feed.json" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
