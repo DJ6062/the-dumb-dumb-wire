@@ -1,5 +1,5 @@
 export default {
-  preset: "node-server",
+  preset: "vercel",
   srcDir: "src",
   rollupConfig: {
     external: ["@supabase/supabase-js"],
