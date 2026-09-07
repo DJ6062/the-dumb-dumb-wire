@@ -1,8 +1,8 @@
 {
   "buildCommand": "node scripts/gen-feed.mjs && npm run build",
   "installCommand": "npm install",
-  "framework": "node-server",
-  "outputDirectory": ".output",
+  "framework": "nitro",
+  "outputDirectory": ".vercel/output",
   "headers": [
     {
       "source": "/(.*)",
