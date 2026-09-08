@@ -64,3 +64,4 @@ export const Route = createFileRoute("/story/$id")({
     );
   },
 });
+// rebuild trigger
