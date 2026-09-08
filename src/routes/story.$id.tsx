@@ -1,13 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { notFound } from "@tanstack/react-router";
+import { createClient } from "@supabase/supabase-js";
 import { StoryCard } from "@/components/StoryCard";
 import { formatDate, type Story } from "@/lib/news";
 
+function getServerClient() {
+  const url = process.env["SUPABASE_URL"] || "";
+  const key = process.env["SUPABASE_ANON_KEY"] || "";
+  if (!url || !key) throw new Error("Missing Supabase env vars");
+  return createClient(url, key);
+}
+
 export const Route = createFileRoute("/story/$id")({
   loader: async ({ params }) => {
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     if (!params.id) throw notFound();
-    const { data, error } = await supabaseAdmin
+    const supabase = getServerClient();
+    const { data, error } = await supabase
       .from("stories")
       .select(`id, topic, headline, date_published, archived,
               perspectives (id, lean, headline, summary_text, source_name, source_url, youtube_video_id)`)
