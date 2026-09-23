@@ -15,6 +15,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CultureRouteImport } from './routes/culture'
 import { Route as OpEdRouteImport } from './routes/op-ed'
 import { Route as PoliticsRouteImport } from './routes/politics'
+import { Route as ApiSetupSeedRouteImport } from './routes/api.setup-seed'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -47,6 +48,11 @@ const PoliticsRoute = PoliticsRouteImport.update({
   path: '/politics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiSetupSeedRoute = ApiSetupSeedRouteImport.update({
+  id: '/api/setup-seed',
+  path: '/api/setup-seed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoryIdRoute = StoryIdRouteImport.update({
   id: '/story/$id',
   path: '/story/$id',
@@ -60,6 +66,7 @@ export interface FileRoutesByFullPath {
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
+  '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
 export interface FileRoutesByTo {
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
+  '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
 export interface FileRoutesById {
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/culture': typeof CultureRoute
   '/op-ed': typeof OpEdRoute
   '/politics': typeof PoliticsRoute
+  '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
 export interface FileRouteTypes {
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/culture'
     | '/op-ed'
     | '/politics'
+    | '/api/setup-seed'
     | '/story/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -99,6 +109,7 @@ export interface FileRouteTypes {
     | '/culture'
     | '/op-ed'
     | '/politics'
+    | '/api/setup-seed'
     | '/story/$id'
   id:
     | '__root__'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/culture'
     | '/op-ed'
     | '/politics'
+    | '/api/setup-seed'
     | '/story/$id'
   fileRoutesById: FileRoutesById
 }
@@ -118,6 +130,7 @@ export interface RootRouteChildren {
   CultureRoute: typeof CultureRoute
   OpEdRoute: typeof OpEdRoute
   PoliticsRoute: typeof PoliticsRoute
+  ApiSetupSeedRoute: typeof ApiSetupSeedRoute
   StoryIdRoute: typeof StoryIdRoute
 }
 
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PoliticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/setup-seed': {
+      id: '/api/setup-seed'
+      path: '/api/setup-seed'
+      fullPath: '/api/setup-seed'
+      preLoaderRoute: typeof ApiSetupSeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/story/$id': {
       id: '/story/$id'
       path: '/story/$id'
@@ -182,6 +202,7 @@ const rootRouteChildren: RootRouteChildren = {
   CultureRoute: CultureRoute,
   OpEdRoute: OpEdRoute,
   PoliticsRoute: PoliticsRoute,
+  ApiSetupSeedRoute: ApiSetupSeedRoute,
   StoryIdRoute: StoryIdRoute,
 }
 export const routeTree = rootRouteImport

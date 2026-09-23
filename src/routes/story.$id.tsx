@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { notFound } from "@tanstack/react-router";
 import { createClient } from "@supabase/supabase-js";
-import { ExternalLink } from "lucide-react";
-import { type Perspective, type Story } from "@/lib/news";
+import { ExternalLink, EyeOff } from "lucide-react";
+import { LEAN_ORDER, formatDate, type Perspective, type Story } from "@/lib/news";
 
 function isUsableKey(value: string | undefined | null): value is string {
   if (!value) return false;
@@ -32,11 +32,6 @@ function createSupabaseFetch(supabaseKey: string): typeof fetch {
   };
 }
 
-/**
- * Server client for public story reads.
- * Prefer publishable key (Lovable / new Supabase API keys). Fall back to a real anon JWT.
- * Never treat placeholder values like "[SENSITIVE]" as valid.
- */
 function getServerClient() {
   const url =
     process.env["SUPABASE_URL"] ||
@@ -57,41 +52,11 @@ function getServerClient() {
   });
 }
 
-const LEAN_ORDER = ["Republican", "Neutral", "Democratic"] as const;
 const LEAN_STYLES: Record<string, { border: string; text: string; label: string }> = {
   Republican: { border: "border-t-rep", text: "text-rep", label: "Republican View" },
   Neutral:    { border: "border-t-neu", text: "text-neu", label: "Neutral / Center View" },
   Democratic: { border: "border-t-dem", text: "text-dem", label: "Democratic View" },
 };
-
-function TakeCard({ take, idx }: { take: Perspective; idx: number }) {
-  const styles = LEAN_STYLES[take.lean] ?? { border: "border-t-foreground", text: "text-foreground", label: take.lean };
-  return (
-    <article className="border border-border bg-card shadow-sm">
-      <div className="flex items-baseline justify-between gap-2 border-b border-border px-4 py-3">
-        <p className={`kicker ${styles.text}`}>{styles.label}</p>
-        <span className="kicker text-muted-foreground text-xs">Take {idx + 1} of {LEAN_ORDER.length}</span>
-      </div>
-      <div className="p-4">
-        <h3 className="headline mt-1 text-xl uppercase">{take.headline}</h3>
-        {take.summary_text && (
-          <p className="mt-3 text-sm leading-relaxed text-foreground/85">{take.summary_text}</p>
-        )}
-        {take.source_url ? (
-          <a
-            href={take.source_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide underline underline-offset-4 hover:text-primary"
-          >
-            {take.source_name || "Source"}
-            <ExternalLink className="h-3 w-3" />
-          </a>
-        ) : null}
-      </div>
-    </article>
-  );
-}
 
 export const Route = createFileRoute("/story/$id")({
   loader: async ({ params }) => {
@@ -110,17 +75,23 @@ export const Route = createFileRoute("/story/$id")({
     );
     return { ...data, perspectives: sorted } as Story;
   },
+
   head: ({ params }) => ({
     meta: [
       { title: `${params.id.slice(0, 8)} — Hey!! Dum Dum` },
       { name: "description", content: "Three takes on one story." },
     ],
   }),
+
   component: function StoryPage() {
     const story = Route.useLoaderData() as Story;
-    const takes = LEAN_ORDER.map((lean) => story.perspectives.find((p) => p.lean === lean)).filter(Boolean) as Perspective[];
+    const takes = LEAN_ORDER
+      .map((lean) => story.perspectives.find((p) => p.lean === lean))
+      .filter(Boolean) as Perspective[];
+
     return (
       <section className="mx-auto max-w-6xl px-4 py-8">
+        {/* ---- Header ---- */}
         <div className="mb-6 border-b-2 border-foreground pb-4">
           <h1 className="headline text-3xl uppercase sm:text-4xl">{story.headline}</h1>
           <p className="mt-2 kicker text-muted-foreground">
@@ -129,9 +100,46 @@ export const Route = createFileRoute("/story/$id")({
             })}
           </p>
         </div>
+
+        {/* ---- Takes: full-width stacked rows (NOT 3-column grid) ---- */}
         {takes.length > 0 ? (
-          <div className="mt-6 grid gap-5 md:grid-cols-3">
-            {takes.map((p, i) => <TakeCard key={p.id} take={p} idx={i} />)}
+          <div className="grid grid-cols-1 divide-y divide-border">
+            {takes.map((take, i) => {
+              const styles = LEAN_STYLES[take.lean] ?? {
+                border: "border-t-foreground", text: "text-foreground", label: take.lean,
+              };
+              return (
+                <div key={take.id} className={`p-4 sm:p-5 first:pt-1 ${styles.border}`}>
+                  {/* Lean label + take counter */}
+                  <div className="flex items-baseline justify-between gap-2 border-b border-border pb-3">
+                    <p className={`kicker text-xs font-bold uppercase tracking-widest ${styles.text}`}>
+                      {styles.label}
+                    </p>
+                    <span className="kicker text-muted-foreground text-xs">
+                      Take {i + 1} of {LEAN_ORDER.length}
+                    </span>
+                  </div>
+                  {/* Take headline + summary + source */}
+                  <div className="mt-4">
+                    <h3 className="headline mt-1 text-xl uppercase">{take.headline}</h3>
+                    {take.summary_text && (
+                      <p className="mt-3 text-sm leading-relaxed text-foreground/85">{take.summary_text}</p>
+                    )}
+                    {take.source_url && (
+                      <a
+                        href={take.source_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide underline underline-offset-4 hover:text-primary"
+                      >
+                        {take.source_name || "Source"}
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <p className="py-10 text-center text-sm text-muted-foreground">
