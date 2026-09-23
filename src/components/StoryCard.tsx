@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Eye, EyeOff } from "lucide-react";
 import { LEAN_ORDER, formatDate, type Lean, type Story } from "@/lib/news";
 
 const LEAN_STYLES: Record<Lean, { border: string; text: string; label: string }> = {
@@ -8,20 +8,11 @@ const LEAN_STYLES: Record<Lean, { border: string; text: string; label: string }>
   Democratic: { border: "border-t-dem", text: "text-dem", label: "Democratic View" },
 };
 
-/**
- * Build a thumbnail URL from a YouTube video ID.
- * Returns null when videoId is empty, a space, or obviously bogus.
- */
 function ytThumb(videoId: string): string | null {
   if (!videoId || videoId.trim() === "" || videoId.trim().length < 6) return null;
   return `https://i.ytimg.com/vi/${videoId.trim()}/hqdefault.jpg`;
 }
 
-/**
- * Pick the best available thumbnail for a story:
- *  1. YouTube thumbnail from the first take that has a real video_id
- *  2. Fallback: the source URL as a clickable link hint (no image)
- */
 function storyThumb(story: Story): { src: string | null; href: string | null } {
   for (const p of story.perspectives) {
     const t = ytThumb(p.youtube_video_id);
@@ -33,9 +24,11 @@ function storyThumb(story: Story): { src: string | null; href: string | null } {
 export function StoryCard({ story }: { story: Story }) {
   const { src: thumbSrc, href: thumbHref } = storyThumb(story);
   const hasVideo = thumbSrc != null;
+  const takeCount = story.perspectives.filter((p) => p.headline).length;
+  const total = LEAN_ORDER.length;
 
   return (
-    <article className="group border border-border bg-card shadow-sm transition hover:shadow-md">
+    <article className="group border border-border bg-card shadow-sm transition hover:shadow-md hover:border-foreground/30">
       {/* ---- Thumbnail strip ---- */}
       <div className="relative overflow-hidden bg-secondary">
         {hasVideo ? (
@@ -46,8 +39,7 @@ export function StoryCard({ story }: { story: Story }) {
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
             />
-            {/* click-through to source when available */}
-            {thumbHref ? (
+            {thumbHref && (
               <a
                 href={thumbHref}
                 target="_blank"
@@ -57,8 +49,7 @@ export function StoryCard({ story }: { story: Story }) {
               >
                 <ExternalLink className="h-8 w-8 text-white drop-shadow-lg" />
               </a>
-            ) : null}
-            {/* YouTube badge */}
+            )}
             <div className="absolute top-2 left-2 kicker rounded-md bg-black/60 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-white/90 drop-shadow-md">
               VIDEO
             </div>
@@ -87,22 +78,42 @@ export function StoryCard({ story }: { story: Story }) {
         <div>
           <span className="kicker text-primary">{story.topic}</span>
           <h2 className="headline mt-1 text-xl uppercase sm:text-2xl">
-            <Link
-              to="/story/$id"
-              params={{ id: story.id }}
-              className="hover:underline underline-offset-4"
-            >
+            <Link to="/story/$id" params={{ id: story.id }} className="hover:underline underline-offset-4">
               {story.headline}
             </Link>
           </h2>
         </div>
-        <time className="kicker text-muted-foreground" dateTime={story.date_published}>
-          {formatDate(story.date_published)}
-        </time>
+        <div className="flex items-center gap-2">
+          <time className="kicker text-muted-foreground" dateTime={story.date_published}>
+            {formatDate(story.date_published)}
+          </time>
+          <span className="kicker rounded-full bg-primary/10 px-2 py-0.5 text-primary">
+            {takeCount}/{total} takes
+          </span>
+        </div>
+      </div>
+
+      {/* ---- Bias mini-bar ---- */}
+      <div className="border-b border-border px-4 py-2">
+        <div className="flex gap-1" aria-label="Take coverage by political leaning">
+          {LEAN_ORDER.map((lean) => {
+            const p = story.perspectives.find((item) => item.lean === lean);
+            const has = p && p.headline;
+            return (
+              <button
+                key={lean}
+                type="button"
+                disabled
+                className={`h-1.5 flex-1 rounded-full transition-colors ${has ? "bg-foreground/40" : "bg-foreground/8"}`}
+                title={`${lean}: ${has ? "take filed" : "no take yet"}`}
+              />
+            );
+          })}
+        </div>
       </div>
 
       {/* ---- Takes: 3 columns, NO video ---- */}
-      <div className="grid grid-cols-1 divide-y divide-border md:grid-cols-3 md:divide-x md:divide-y-0">
+      <div className="grid grid-cols-1 divide-y divide-border px-4 pb-4 md:grid-cols-3 md:divide-x md:divide-y-0">
         {LEAN_ORDER.map((lean) => {
           const p = story.perspectives.find((item) => item.lean === lean);
           const styles = LEAN_STYLES[lean];
@@ -112,10 +123,8 @@ export function StoryCard({ story }: { story: Story }) {
               {p ? (
                 <>
                   <h3 className="headline mt-2 text-base uppercase">{p.headline}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-foreground/85">
-                    {p.summary_text}
-                  </p>
-                  {p.source_url ? (
+                  <p className="mt-2 text-sm leading-relaxed text-foreground/85">{p.summary_text}</p>
+                  {p.source_url && (
                     <a
                       href={p.source_url}
                       target="_blank"
@@ -125,12 +134,13 @@ export function StoryCard({ story }: { story: Story }) {
                       {p.source_name || "Source"}
                       <ExternalLink className="h-3 w-3" />
                     </a>
-                  ) : null}
+                  )}
                 </>
               ) : (
-                <p className="mt-2 text-sm italic text-muted-foreground">
+                <div className="mt-2 flex items-center gap-1.5 text-sm italic text-muted-foreground">
+                  <EyeOff className="h-3.5 w-3.5 shrink-0" />
                   No take filed yet.
-                </p>
+                </div>
               )}
             </div>
           );
