@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hey! Dumb Dumb — The Wire</title>
+  <meta name="description" content="Three takes on every story. Right, Neutral, Left — raw links, no commentary." />
+  <style>
+    :root { --red: #B3122A; --ink: #0d0d0f; --paper: #f7f4ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: var(--paper); color: var(--ink); }
+    header { background: var(--red); color: #fff; padding: 2.5rem 1rem; text-align: center; }
+    header h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.5rem); letter-spacing: 1px; }
+    header p { margin: .4rem 0 0; font-style: italic; opacity: .9; }
+    main { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+    .manifesto { border-left: 4px solid var(--red); padding-left: 1rem; margin: 2rem 0; font-size: 1.05rem; }
+    .join { background: #fff; border: 1px solid #e2dcd2; border-radius: 10px; padding: 1.5rem; margin: 2rem 0; text-align: center; }
+    .join input[type=email] { padding: .6rem; width: min(320px, 80%); border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+    .join button { margin-top: .8rem; display: block; width: min(320px, 80%); margin-left: auto; margin-right: auto;
+      background: var(--red); color: #fff; border: 0; padding: .7rem; font-size: 1rem; border-radius: 6px; cursor: pointer; }
+    .stories { display: grid; gap: 1.25rem; }
+    .story { background: #fff; border: 1px solid #e2dcd2; border-radius: 10px; padding: 1.25rem; }
+    .story .tag { display: inline-block; background: var(--red); color: #fff; font-size: .7rem; text-transform: uppercase;
+      letter-spacing: 1px; padding: .2rem .5rem; border-radius: 4px; }
+    .story h2 { margin: .6rem 0; font-size: 1.3rem; }
+    .story a.title { color: var(--ink); text-decoration: none; }
+    .takes { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem; }
+    .take { flex: 1 1 30%; min-width: 120px; background: #faf7f2; border: 1px solid #ece6dc; border-radius: 6px; padding: .5rem; text-align: center; font-size: .85rem; }
+    .take a { color: var(--red); text-decoration: none; font-weight: bold; }
+    footer { text-align: center; padding: 2rem 1rem; color: #777; font-size: .85rem; }
+    footer a { color: var(--red); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HEY! DUMB DUMB</h1>
+    <p>The Wire — three takes on every story.</p>
+  </header>
+  <main>
+    <section class="manifesto">
+      <p><strong>We don't tell you what to think.</strong> Every story comes with three takes —
+      <em>Right</em>, <em>Neutral</em>, <em>Left</em> — straight from the sources. Raw links, no commentary.
+      You read all three. You decide.</p>
+    </section>
+
+    <section class="join">
+      <h2 style="margin-top:0">Join the newsletter</h2>
+      <p>No sign-in. Just the wire, in your inbox.</p>
+      <!-- JOIN FORM: wire to a mail provider (Buttondown/Kit/Loops) — see SETUP.md -->
+      <form id="join-form" action="#" method="post">
+        <input type="email" name="email" placeholder="you@email.com" required aria-label="email" />
+        <button type="submit">Join</button>
+      </form>
+      <p id="join-note" style="font-size:.8rem;color:#999">Form wiring pending — connect a mail provider.</p>
+    </section>
+
+    <section class="stories" id="stories">
+      <p>Loading the wire…</p>
+    </section>
+  </main>
+  <footer>
+    Hey! Dumb Dumb — The Wire. Read the full story on the site.
+    <br />Hosted free on GitHub Pages. Bot relays new stories to Discord.
+  </footer>
+
+  <script>
+    // Loads feed.json (same-origin) and renders the latest stories.
+    fetch('feed.json').then(r => r.json()).then(feed => {
+      const el = document.getElementById('stories');
+      if (!feed.items || !feed.items.length) { el.innerHTML = '<p>No stories yet — check back soon.</p>'; return; }
+      el.innerHTML = feed.items.map(it => {
+        const takes = it.takes || {};
+        const take = (label, t) => t && t.url
+          ? `<div class="take">${label}<br><a href="${t.url}" target="_blank" rel="noopener">${t.source||'source'}</a></div>`
+          : '';
+        return `<article class="story">
+          <span class="tag">${it.topic}</span>
+          <h2><a class="title" href="${it.url}" target="_blank" rel="noopener">${it.title}</a></h2>
+          <p>${it.summary || ''}</p>
+          <div class="takes">${take('Right', takes.right)}${take('Neutral', takes.neutral)}${take('Left', takes.left)}</div>
+        </article>`;
+      }).join('');
+    }).catch(() => { document.getElementById('stories').innerHTML = '<p>Could not load the wire.</p>'; });
+  </script>
+</body>
+</html>
