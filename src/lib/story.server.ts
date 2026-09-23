@@ -8,10 +8,14 @@ import type { Story } from "@/lib/news";
 export async function fetchStoryById(id: string): Promise<Story | null> {
   if (!id || id === "undefined" || id === "null") return null;
   try {
-    const url = process.env["SUPABASE_URL"] || "";
-    const key = process.env["SUPABASE_ANON_KEY"] || "";
-    if (!url || !key) return null;
-    const supabase = createClient(url, key);
+    const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"] || "";
+    const key =
+      process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+      process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+      process.env["SUPABASE_ANON_KEY"] ||
+      "";
+    if (!url || !key || key === "[SENSITIVE]" || key.length < 20) return null;
+    const supabase = createClient(url, key, { auth: { persistSession: false } });
     const { data, error } = await supabase
       .from("stories")
       .select(
@@ -40,10 +44,14 @@ export async function fetchStoryById(id: string): Promise<Story | null> {
  */
 export async function fetchAllStories(): Promise<Story[]> {
   try {
-    const url = process.env["SUPABASE_URL"] || "";
-    const key = process.env["SUPABASE_ANON_KEY"] || "";
-    if (!url || !key) return [];
-    const supabase = createClient(url, key);
+    const url = process.env["SUPABASE_URL"] || process.env["VITE_SUPABASE_URL"] || "";
+    const key =
+      process.env["SUPABASE_PUBLISHABLE_KEY"] ||
+      process.env["VITE_SUPABASE_PUBLISHABLE_KEY"] ||
+      process.env["SUPABASE_ANON_KEY"] ||
+      "";
+    if (!url || !key || key === "[SENSITIVE]" || key.length < 20) return [];
+    const supabase = createClient(url, key, { auth: { persistSession: false } });
     const { data, error } = await supabase
       .from("stories")
       .select("id, topic, headline, date_published, archived, perspectives(*)")

@@ -13,8 +13,9 @@ export function SiteHeader() {
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex flex-col items-center gap-1 py-5 text-center">
           <Link to="/" className="block">
-            <h1 className="headline text-4xl uppercase sm:text-6xl">
-              Hey!! <span className="text-primary">Dum Dum</span>
+            <h1 className="headline text-4xl uppercase sm:text-6xl tracking-wide">
+              Hey !!{" "}
+              <span className="text-primary">Dum Dum</span>
             </h1>
           </Link>
           <p className="kicker text-muted-foreground">
@@ -42,10 +43,11 @@ export function SiteFooter() {
   return (
     <footer className="mt-16 border-t-4 border-foreground bg-card">
       <div className="mx-auto max-w-6xl px-4 py-8 text-center">
-        <p className="headline text-lg uppercase">Hey!! Dum Dum</p>
+        <p className="headline text-lg uppercase">Hey !! Dum Dum</p>
         <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
-          An aggregator. We link out to other people's journalism and let you compare
-          the framing yourself. We don't assign bias — the outlets do that for free.
+          An aggregator. We link out to other people's journalism and let you
+          compare the framing yourself. We don't assign bias — the outlets do
+          that for free.
         </p>
         <div className="mt-4 flex justify-center gap-4">
           <Link to="/about" className="kicker underline underline-offset-4">

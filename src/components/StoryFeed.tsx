@@ -1,19 +1,8 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search } from "lucide-react";
 import { StoryCard } from "./StoryCard";
 import { TOPICS, storiesQuery, type Topic } from "@/lib/news";
-
-function scrollStrip(el: HTMLDivElement | null, dir: "left" | "right", gap = 16) {
-  if (!el) return;
-  const scroll = el.scrollWidth - el.clientWidth;
-  if (scroll <= 0) return;
-  const step = el.clientWidth * 0.6 + gap;
-  el.scrollBy({
-    left: dir === "left" ? -step : step,
-    behavior: "smooth",
-  });
-}
 
 export function StoryFeed({
   fixedTopic,
@@ -57,11 +46,10 @@ export function StoryFeed({
     });
   }, [filtered]);
 
-  const stripRef = useMemo(() => ({ current: null as HTMLDivElement | null }), []);
-
   return (
     <section className="mx-auto max-w-6xl px-4 py-8">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-foreground pb-3">
+      {/* ---- Kicker / heading ---- */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3">
         <h2 className="headline text-2xl uppercase">{title}</h2>
         <div className="flex flex-wrap items-center gap-2">
           {!fixedTopic && (
@@ -95,6 +83,7 @@ export function StoryFeed({
         </div>
       </div>
 
+      {/* ---- Body: responsive article grid ---- */}
       {isLoading ? (
         <p className="py-10 text-center text-sm text-muted-foreground">
           Loading stories...
@@ -104,43 +93,17 @@ export function StoryFeed({
           Nothing here yet. Even dumb dumbs need sources.
         </p>
       ) : (
-        <div className="mt-6">
-          {/* Horizontal scroll strip */}
-          <div className="relative">
-            {/* Scroll buttons */}
-            <button
-              type="button"
-              onClick={() => scrollStrip(stripRef.current, "left")}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur-sm shadow-sm transition-colors hover:bg-secondary"
-              aria-label="Scroll left"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollStrip(stripRef.current, "right")}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur-sm shadow-sm transition-colors hover:bg-secondary"
-              aria-label="Scroll right"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-
-            <div
-              ref={stripRef.current as unknown as (n: HTMLDivElement | null) => void}
-              className="flex gap-4 overflow-x-auto pb-4 pt-12 scroll-smooth scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]"
-            >
-              {ranked.map((story) => (
-                <StoryCard key={story.id} story={story} />
-              ))}
-            </div>
-          </div>
-
-          {/* Mini legend: "Biggest = more takes filled" */}
-          <p className="mt-2 -ml-2 text-xs text-muted-foreground">
-            Biggest stories first — ranked by number of takes filed, then newest.
-          </p>
+        <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {ranked.map((story) => (
+            <StoryCard key={story.id} story={story} />
+          ))}
         </div>
       )}
+
+      {/* Mini legend */}
+      <p className="mt-3 -ml-2 text-xs text-muted-foreground">
+        Biggest stories first — ranked by number of takes filed, then newest.
+      </p>
     </section>
   );
 }
