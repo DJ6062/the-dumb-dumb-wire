@@ -18,11 +18,16 @@ const errorMiddleware = createMiddleware().server(async ({ next }) => {
   }
 });
 
-// Start installs this automatically when src/start.ts is absent; defining the
-// file opts out, so re-add it explicitly to keep server functions protected
-// from cross-site requests.
+// CSRF protection for all serverFns, except the pipeline-pick endpoint
+// which is called by the Discord bot over plain HTTP with an
+// x-pipeline-api-key header (no browser/CSRF context).
 const csrfMiddleware = createCsrfMiddleware({
-  filter: (ctx) => ctx.handlerType === "serverFn",
+  filter: (ctx) => {
+    if (ctx.request.headers.get("x-pipeline-api-key")) {
+      return false; // skip CSRF for bot calls
+    }
+    return ctx.handlerType === "serverFn";
+  },
 });
 
 export const startInstance = createStart(() => ({

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Play, ExternalLink } from "lucide-react";
-import { storiesQuery } from "@/lib/news";
+import { storiesQuery, LEAN_DB_TO_UI, type Lean } from "@/lib/news";
 
 /* ------------------------------------------------------------------ */
 /*  Big News / Breaknews — Netflix-style hero                         */
@@ -9,19 +9,19 @@ import { storiesQuery } from "@/lib/news";
 /*  The single biggest story of the week, shown as three takes        */
 /*  side by side:                                                     */
 /*                                                                    */
-/*    Democratic (blue)   │  Neutral (middle)  │  Republican (red)   */
+/*    Left (blue)    │  Center (middle)  │  Right (red)              */
 /*                                                                    */
 /*  Each take has its own YouTube video. Dark, bold, eye-catching     */
 /*  to pull visitors in.                                              */
 /* ------------------------------------------------------------------ */
 
-const LEAN_ORDER = ["Democratic", "Neutral", "Republican"] as const;
+const LEAN_ORDER = ["Left", "Center", "Right"] as const;
 type LeanKey = (typeof LEAN_ORDER)[number];
 
 const LEAN_VARS: Record<LeanKey, { color: string; bg: string; border: string; label: string }> = {
-  Democratic: { color: "var(--dem)",  bg: "rgba(30,60,140,0.15)",  border: "rgba(50,90,200,0.5)",  label: "DEMOCRATS" },
-  Neutral:    { color: "var(--neu)",  bg: "rgba(120,120,120,0.12)", border: "rgba(180,180,180,0.25)", label: "NEUTRAL" },
-  Republican: { color: "var(--rep)",  bg: "rgba(170,30,30,0.15)",  border: "rgba(200,50,50,0.5)",  label: "REPUBLICANS" },
+  Left:    { color: "var(--left)",  bg: "rgba(30,60,140,0.15)",  border: "rgba(50,90,200,0.5)",  label: "LEFT" },
+  Center:  { color: "var(--cen)",   bg: "rgba(120,120,120,0.12)", border: "rgba(180,180,180,0.25)", label: "CENTER" },
+  Right:   { color: "var(--rep)",   bg: "rgba(170,30,30,0.15)",  border: "rgba(200,50,50,0.5)",  label: "RIGHT" },
 };
 
 export function WireSection() {
@@ -37,10 +37,13 @@ export function WireSection() {
     })
     .slice(0, 1)[0];
 
-  /* Takes ordered left→right: Dem | Neu | Rep */
+  /* Takes ordered left-to-right: Left | Center | Right */
   const takes = hero
     ? LEAN_ORDER
-        .map((lean) => hero.perspectives.find((p) => p.lean === lean))
+        .map((uiLean) => {
+          const dbLean = LEAN_UI_TO_DB[uiLean];
+          return hero.perspectives.find((p) => p.lean === uiLean) ?? null;
+        })
         .filter(Boolean)
     : [];
 
@@ -93,7 +96,7 @@ export function WireSection() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {takes.map((take) => {
             if (!take) return null;
-            const lean = take.lean as LeanKey;
+            const lean = (LEAN_DB_TO_UI[take.lean] ?? take.lean) as LeanKey;
             const v = LEAN_VARS[lean];
             const embedId = ytId(take);
 
@@ -101,10 +104,10 @@ export function WireSection() {
               <article
                 key={take.id}
                 className={`group relative overflow-hidden rounded-xl bg-gradient-to-br p-4 shadow-lg transition hover:shadow-xl sm:border-0 sm:shadow-none ${
-                  lean === "Democratic"
-                    ? "border-blue-800/40 sm:border-blue-900/60"
-                    : lean === "Republican"
+                  lean === "Right"
                     ? "border-red-800/40 sm:border-red-900/60"
+                    : lean === "Left"
+                    ? "border-blue-800/40 sm:border-blue-900/60"
                     : "border-foreground/10 sm:border-foreground/20"
                 }`}
                 style={{ backgroundColor: v.bg, borderColor: v.border }}

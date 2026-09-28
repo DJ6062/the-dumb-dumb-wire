@@ -2,10 +2,16 @@ import { queryOptions } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
 export type Topic = "Politics" | "Culture" | "Op-Ed";
-export type Lean = "Republican" | "Neutral" | "Democratic";
+export type Lean = "Left" | "Center" | "Right";
 
 export const TOPICS: Topic[] = ["Politics", "Culture", "Op-Ed"];
-export const LEAN_ORDER: Lean[] = ["Republican", "Neutral", "Democratic"];
+export const LEAN_ORDER: Lean[] = ["Left", "Center", "Right"];
+
+export const LEAN_DB_TO_UI: Record<string, Lean> = {
+  Republican: "Right",
+  Neutral: "Center",
+  Democratic: "Left",
+};
 
 export type Perspective = {
   id: string;
@@ -44,8 +50,11 @@ export const storiesQuery = queryOptions({
     if (error) throw error;
     return (data ?? []).map((story) => ({
       ...story,
-      perspectives: [...(story.perspectives ?? [])].sort(
-        (a, b) => LEAN_ORDER.indexOf(a.lean as Lean) - LEAN_ORDER.indexOf(b.lean as Lean),
+      perspectives: [...(story.perspectives ?? [])].map((p) => ({
+        ...p,
+        lean: LEAN_DB_TO_UI[p.lean] ?? (p.lean as Lean),
+      })).sort(
+        (a, b) => LEAN_ORDER.indexOf(a.lean) - LEAN_ORDER.indexOf(b.lean),
       ),
     })) as Story[];
   },

@@ -3,11 +3,14 @@ import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
 export const Route = createFileRoute("/api/setup-seed")({
-  loader: async () => {
+  action: async ({ request }) => {
     const url = process.env["SUPABASE_URL"] || "";
     const key = process.env["SUPABASE_SERVICE_ROLE_KEY"] || "";
     if (!url || !key || key === "[SENSITIVE]") {
-      return { error: "Service role key not configured" };
+      return new Response(
+        JSON.stringify({ error: "Service role key not configured" }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
     }
     const supabase = createClient<Database>(url, key);
 
@@ -78,7 +81,7 @@ export const Route = createFileRoute("/api/setup-seed")({
       { headline_text: "HOSPITAL SYSTEMS MERGER WATCH: THREE DEALS PENDING", external_url: "https://modernhealthcare.com/wire/hospitals" },
     ];
 
-    // --- Insert new stories (skip if already exist) ---
+    // Existing story IDs to skip re-inserting
     const existingIds = [
       "55555555-5555-5555-5555-555555555555", "66666666-6666-6666-6666-666666666666",
       "77777777-7777-7777-7777-777777777777", "88888888-8888-8888-8888-888888888888",
@@ -108,22 +111,25 @@ export const Route = createFileRoute("/api/setup-seed")({
     ].filter(s => !existingSet.has(s.id));
 
     const { data: sData, error: sErr } = await supabase.from("stories").insert(toInsert).select("id");
-    if (sErr) return { error: `stories: ${sErr.message}` };
+    if (sErr) return new Response(JSON.stringify({ error: `stories: ${sErr.message}` }), { status: 500, headers: { "Content-Type": "application/json" } });
 
     const { error: pErr } = await supabase.from("perspectives").upsert(allP, { onConflict: "story_id,lean" });
-    if (pErr) return { error: `perspectives: ${pErr.message}` };
+    if (pErr) return new Response(JSON.stringify({ error: `perspectives: ${pErr.message}` }), { status: 500, headers: { "Content-Type": "application/json" } });
 
     const { error: wErr } = await supabase.from("wire_links").upsert(wireLinks, { onConflict: "external_url" });
-    if (wErr) return { error: `wire_links: ${wErr.message}` };
+    if (wErr) return new Response(JSON.stringify({ error: `wire_links: ${wErr.message}` }), { status: 500, headers: { "Content-Type": "application/json" } });
 
-    return {
-      ok: true,
-      counts: {
-        new_stories: sData?.length ?? 0,
-        perspectives: allP.length,
-        wire_links: wireLinks.length,
-        total_stories: 15,
-      },
-    };
+    return new Response(
+      JSON.stringify({
+        ok: true,
+        counts: {
+          new_stories: sData?.length ?? 0,
+          perspectives: allP.length,
+          wire_links: wireLinks.length,
+          total_stories: 15,
+        },
+      }),
+      { headers: { "Content-Type": "application/json" } }
+    );
   },
 });

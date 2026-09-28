@@ -9,12 +9,12 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "A tabloid-dense news aggregator: raw wire links up top, then every story split into Republican, neutral, and Democratic coverage.",
+          "A tabloid-dense news aggregator: raw wire links up top, then every story split into Left, Center, and Right coverage.",
       },
       { property: "og:title", content: "Hey!! Dum Dum — Three Takes on Every Story" },
       {
-        property: "og:description",
-        content: "Raw wire links up top. Republican, neutral, and Democratic takes below.",
+        name: "description",
+        content: "Raw wire links up top. Left, Center, and Right takes below.",
       },
     ],
   }),
@@ -25,7 +25,15 @@ function Home() {
   return (
     <>
       <WireSection />
-      <StoryFeed />
+      <section id="politics" className="scroll-mt-20">
+        <StoryFeed fixedTopic="Politics" title="Politics" />
+      </section>
+      <section id="culture" className="scroll-mt-20">
+        <StoryFeed fixedTopic="Culture" title="Culture" />
+      </section>
+      <section id="op-ed" className="scroll-mt-20">
+        <StoryFeed fixedTopic="Op-Ed" title="Op-Ed" />
+      </section>
     </>
   );
 }

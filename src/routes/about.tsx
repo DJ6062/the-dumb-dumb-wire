@@ -24,21 +24,6 @@ function About() {
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="headline text-4xl uppercase sm:text-5xl">About</h1>
 
-      <blockquote className="mt-8 border-l-4 border-primary bg-card p-6">
-        <p className="headline text-2xl italic leading-snug">
-          "I'm dumb dumb! Who are you?
-          <br />
-          Are you – dumb dumb – too?
-          <br />
-          Then there's a pair of us!
-          <br />
-          Don't tell! they'd advertise – you know!"
-        </p>
-        <footer className="kicker mt-4 text-muted-foreground">
-          With apologies to Emily Dickinson
-        </footer>
-      </blockquote>
-
       <div className="mt-8 space-y-5 text-base leading-relaxed">
         <p>
           Everybody looks like a dumb dumb from someone else's side of the aisle. That's
@@ -53,10 +38,9 @@ function About() {
         </p>
         <p>
           Below it is the <strong>Story Grid</strong>. Each story is one card split into
-          three columns — a right-leaning take, a neutral/center take, and a left-leaning
-          take. Each column carries its own headline, a short summary, the outlet name
-          with a link to the original piece, and a video segment when one exists. Read
-          across, not down.
+          three columns — a Right take, a Center take, and a Left take. Each column
+          carries its own headline, a short summary, the outlet name with a link to the
+          original piece, and a video segment when one exists. Read across, not down.
         </p>
 
         <h2 className="headline pt-4 text-2xl uppercase">Sourcing philosophy</h2>

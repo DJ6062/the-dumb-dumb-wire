@@ -13,7 +13,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader, SiteFooter } from "@/components/SiteHeader";
 
-
 function NotFoundComponent() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -83,7 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "A political news aggregator that puts the Republican, neutral, and Democratic take on every story side by side.",
+          "A political news aggregator that puts the Left, Center, and Right take on every story side by side.",
       },
       { property: "og:title", content: "Hey!! Dum Dum" },
       {
@@ -144,4 +143,3 @@ function RootComponent() {
     </QueryClientProvider>
   );
 }
-

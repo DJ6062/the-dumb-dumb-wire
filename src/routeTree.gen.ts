@@ -12,9 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as CultureRouteImport } from './routes/culture'
-import { Route as OpEdRouteImport } from './routes/op-ed'
-import { Route as PoliticsRouteImport } from './routes/politics'
+import { Route as ApiPipelinePickRouteImport } from './routes/api.pipeline-pick'
 import { Route as ApiSetupSeedRouteImport } from './routes/api.setup-seed'
 import { Route as StoryIdRouteImport } from './routes/story.$id'
 
@@ -33,19 +31,9 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CultureRoute = CultureRouteImport.update({
-  id: '/culture',
-  path: '/culture',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OpEdRoute = OpEdRouteImport.update({
-  id: '/op-ed',
-  path: '/op-ed',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PoliticsRoute = PoliticsRouteImport.update({
-  id: '/politics',
-  path: '/politics',
+const ApiPipelinePickRoute = ApiPipelinePickRouteImport.update({
+  id: '/api/pipeline-pick',
+  path: '/api/pipeline-pick',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSetupSeedRoute = ApiSetupSeedRouteImport.update({
@@ -63,9 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/culture': typeof CultureRoute
-  '/op-ed': typeof OpEdRoute
-  '/politics': typeof PoliticsRoute
+  '/api/pipeline-pick': typeof ApiPipelinePickRoute
   '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
@@ -73,9 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/culture': typeof CultureRoute
-  '/op-ed': typeof OpEdRoute
-  '/politics': typeof PoliticsRoute
+  '/api/pipeline-pick': typeof ApiPipelinePickRoute
   '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
@@ -84,9 +68,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/culture': typeof CultureRoute
-  '/op-ed': typeof OpEdRoute
-  '/politics': typeof PoliticsRoute
+  '/api/pipeline-pick': typeof ApiPipelinePickRoute
   '/api/setup-seed': typeof ApiSetupSeedRoute
   '/story/$id': typeof StoryIdRoute
 }
@@ -96,9 +78,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/culture'
-    | '/op-ed'
-    | '/politics'
+    | '/api/pipeline-pick'
     | '/api/setup-seed'
     | '/story/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -106,9 +86,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/culture'
-    | '/op-ed'
-    | '/politics'
+    | '/api/pipeline-pick'
     | '/api/setup-seed'
     | '/story/$id'
   id:
@@ -116,9 +94,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/culture'
-    | '/op-ed'
-    | '/politics'
+    | '/api/pipeline-pick'
     | '/api/setup-seed'
     | '/story/$id'
   fileRoutesById: FileRoutesById
@@ -127,9 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
-  CultureRoute: typeof CultureRoute
-  OpEdRoute: typeof OpEdRoute
-  PoliticsRoute: typeof PoliticsRoute
+  ApiPipelinePickRoute: typeof ApiPipelinePickRoute
   ApiSetupSeedRoute: typeof ApiSetupSeedRoute
   StoryIdRoute: typeof StoryIdRoute
 }
@@ -157,25 +131,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/culture': {
-      id: '/culture'
-      path: '/culture'
-      fullPath: '/culture'
-      preLoaderRoute: typeof CultureRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/op-ed': {
-      id: '/op-ed'
-      path: '/op-ed'
-      fullPath: '/op-ed'
-      preLoaderRoute: typeof OpEdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/politics': {
-      id: '/politics'
-      path: '/politics'
-      fullPath: '/politics'
-      preLoaderRoute: typeof PoliticsRouteImport
+    '/api/pipeline-pick': {
+      id: '/api/pipeline-pick'
+      path: '/api/pipeline-pick'
+      fullPath: '/api/pipeline-pick'
+      preLoaderRoute: typeof ApiPipelinePickRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/setup-seed': {
@@ -199,9 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
-  CultureRoute: CultureRoute,
-  OpEdRoute: OpEdRoute,
-  PoliticsRoute: PoliticsRoute,
+  ApiPipelinePickRoute: ApiPipelinePickRoute,
   ApiSetupSeedRoute: ApiSetupSeedRoute,
   StoryIdRoute: StoryIdRoute,
 }
